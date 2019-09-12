@@ -66,8 +66,7 @@ class SignUpPage extends StatelessWidget {
                             vertical: 20.0, horizontal: 20.0),
                         color: this.highlightColor,
                         onPressed: () {
-                          PopUpDialog.creaAlertDialog(context, "Confirmation",
-                              "Your account has been created. Now you can log in.");
+                          PopUpDialog.creaAlertDialog(title: "Confirmation" , msg: "Your account has been created. Now you can log in.", context: context);
                         },
                         child: Text(
                           "Submit",

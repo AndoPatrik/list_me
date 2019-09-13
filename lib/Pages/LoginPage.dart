@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Pages/FunctionsIntroPage.dart';
+import 'package:list_me/Pages/SignUpPage.dart';
 import 'package:list_me/Utilities/constants.dart';
 import 'package:list_me/Widgets/CustomInputField.dart';
 import 'package:list_me/Widgets/PopUpDialog.dart';
@@ -86,7 +87,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               ),
               RoundedButton(
                 textColor: kForegroundColor,
-                buttonColor: kHighlightColor,
+                buttonColor: kCustomPurpleColor,
                 buttonText: "Log In",
                 onPressed: () async {
                   setState(() {
@@ -152,7 +153,12 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 child: Divider(),
               ),
               RoundedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpPage()))
+                },
                 buttonColor: Colors.transparent,
                 textColor: kForegroundColor.withOpacity(0.5),
                 buttonText: "Don't you have an account? Create one",

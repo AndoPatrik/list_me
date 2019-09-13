@@ -21,14 +21,9 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: _showSpinner,
-              child: Container(
+        child: Container(
           decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [kBackgroundColor1, kBackgroundColor2],
-              tileMode: TileMode.repeated,
-            ),
+            gradient: kBackgroundLinearGradient2
           ),
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -95,7 +90,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 buttonText: "Log In",
                 onPressed: () async {
                   setState(() {
-                   _showSpinner = true; 
+                    _showSpinner = true;
                   });
 
                   try {
@@ -106,13 +101,13 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           context,
                           MaterialPageRoute(
                               builder: (context) => FunctionsIntroPage()));
-                       setState(() {
-                        _showSpinner = false; 
-                       });       
+                      setState(() {
+                        _showSpinner = false;
+                      });
                     }
                   } catch (e) {
                     setState(() {
-                     _showSpinner = false; 
+                      _showSpinner = false;
                     });
                     PopUpDialog.creaAlertDialog(
                         context: context,
@@ -124,7 +119,8 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               ),
               new Container(
                 width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+                margin:
+                    const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
                 alignment: Alignment.center,
                 child: new Row(
                   children: <Widget>[
@@ -138,13 +134,14 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         onPressed: () => {
                           PopUpDialog.creaAlertDialog(
                               title: "Confirmation",
-                              msg: "Reset e-mail has been sent to your address.",
+                              msg:
+                                  "Reset e-mail has been sent to your address.",
                               context: context)
                         },
                         child: Text(
                           "Forgot your password?",
-                          style:
-                              TextStyle(color: kForegroundColor.withOpacity(0.5)),
+                          style: TextStyle(
+                              color: kForegroundColor.withOpacity(0.5)),
                         ),
                       ),
                     ),

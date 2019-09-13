@@ -15,10 +15,15 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
 
   List<FeatureDemoItem> features = [
     new FeatureDemoItem(
-        "Create a To-do list", "You can create a to-do list", Colors.green),
-    new FeatureDemoItem("Make note", "You can make notes", Colors.blue),
+        "To do list",
+        "Creat your own to-do list. Keep track of your tasks, and priorotize them..",
+        Colors.green),
+    new FeatureDemoItem("Notes",
+        "Write your notes. You will never forget anything again.", Colors.blue),
     new FeatureDemoItem(
-        "Save your websites", "You can save your sites", Colors.yellow),
+        "Passwords",
+        "Save your passwords, so you never gonna see the backup emails..",
+        Colors.yellow),
   ];
 
   List<int> list = [1, 2, 3, 4, 5];
@@ -70,14 +75,15 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
     }
     return color;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.grey,
+        //color: Colors.white60,
+        decoration: BoxDecoration(gradient: kBackgroundLinearGradient2),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,6 +118,7 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
+                        padding: EdgeInsets.all(15),
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(
                             bottom: 40.0, right: 20.0, left: 20.0, top: 40.0),
@@ -123,25 +130,35 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                                 blurRadius: 25.0,
                               ),
                             ],
-                            color: feature.color,
+                            //color: kHighlightColor,
+                            gradient: kBackgroundLinearGradient2,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0))),
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top: 20),
+                              padding: EdgeInsets.only(top: 40),
                             ),
                             Text(
                               feature.featureName,
-                              style: TextStyle(fontSize: 30.0),
+                              style: TextStyle(fontSize: 30.0, color: kForegroundColor),
                               textAlign: TextAlign.center,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 50),
+                            new CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              foregroundColor: kForegroundColor,
+                              radius: 100.0,
+                              child: new Text(
+                                "Flare",
+                                style: TextStyle(
+                                  fontSize: 50.0,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
                             ),
                             Text(
                               feature.description,
-                              style: TextStyle(fontSize: 20.0),
+                              style: TextStyle(fontSize: 20.0, color: kForegroundColor),
                               textAlign: TextAlign.center,
                             )
                           ],
@@ -155,8 +172,8 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
             Expanded(
               flex: 2,
               child: RoundedButton(
-                textColor: kForegroundColor,
-                buttonColor: kHighlightColor,
+                textColor: Colors.black,
+                buttonColor: Colors.white70,
                 buttonText: "Got it",
                 onPressed: () => {
                   Navigator.push(context,

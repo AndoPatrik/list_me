@@ -17,13 +17,18 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
     new FeatureDemoItem(
         "To do list",
         "Creat your own to-do list. Keep track of your tasks, and priorotize them..",
-        Colors.green),
-    new FeatureDemoItem("Notes",
-        "Write your notes. You will never forget anything again.", Colors.blue),
+        Colors.green,
+        Icons.list),
+    new FeatureDemoItem(
+        "Notes",
+        "Write your notes. You will never forget anything again.",
+        Colors.blue,
+        Icons.note),
     new FeatureDemoItem(
         "Passwords",
         "Save your passwords, so you never gonna see the backup emails..",
-        Colors.yellow),
+        Colors.yellow,
+        Icons.lock),
   ];
 
   List<int> list = [1, 2, 3, 4, 5];
@@ -99,7 +104,8 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                   style: TextStyle(
                       fontSize: 35.0,
                       fontWeight: FontWeight.bold,
-                      fontFamily: "Roboto"),
+                      fontFamily: "Roboto",
+                      color: kForegroundColor),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -141,24 +147,31 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                             ),
                             Text(
                               feature.featureName,
-                              style: TextStyle(fontSize: 30.0, color: kForegroundColor),
+                              style: TextStyle(
+                                  fontSize: 30.0, color: kForegroundColor),
                               textAlign: TextAlign.center,
                             ),
                             new CircleAvatar(
                               backgroundColor: Colors.transparent,
                               foregroundColor: kForegroundColor,
                               radius: 100.0,
-                              child: new Text(
+                              child: Icon(
+                                feature.icon,
+                                size: 100,
+                              ),
+
+                              /* new Text(
                                 "Flare",
                                 style: TextStyle(
                                   fontSize: 50.0,
                                   fontWeight: FontWeight.w100,
                                 ),
-                              ),
+                              ), */
                             ),
                             Text(
                               feature.description,
-                              style: TextStyle(fontSize: 20.0, color: kForegroundColor),
+                              style: TextStyle(
+                                  fontSize: 20.0, color: kForegroundColor),
                               textAlign: TextAlign.center,
                             )
                           ],

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Model/FeauterDemoItem.dart';
-import 'package:list_me/Pages/Dashboard.dart';
+import 'package:list_me/Pages/ToDoListPage.dart';
 import 'package:list_me/Utilities/constants.dart';
 import 'package:list_me/Widgets/RoundedButton.dart';
 
@@ -190,7 +190,7 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                 buttonText: "Got it",
                 onPressed: () => {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Dashboard())),
+                      MaterialPageRoute(builder: (context) => ToDoListPage())),
                 },
               ),
             ),

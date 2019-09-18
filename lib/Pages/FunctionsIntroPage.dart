@@ -12,6 +12,7 @@ class FunctionsIntroPage extends StatefulWidget {
 
 class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
   int _current = 0;
+  bool _visible = false;
 
   List<FeatureDemoItem> features = [
     new FeatureDemoItem(
@@ -117,6 +118,9 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                 onPageChanged: (index) {
                   setState(() {
                     _current = index;
+                    if (index != 0) {
+                      _visible = true;
+                    }
                   });
                 },
                 items: features.map((feature) {
@@ -175,14 +179,20 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
             ),
             Expanded(
               flex: 2,
-              child: RoundedButton(
-                textColor: Colors.black,
-                buttonColor: Colors.white70,
-                buttonText: "Got it",
-                onPressed: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ToDoListPage())),
-                },
+              child: AnimatedOpacity(
+                opacity: _visible ? 1.0 : 0.0,
+                duration: Duration(milliseconds: 1000),
+                child: RoundedButton(
+                  textColor: Colors.black,
+                  buttonColor: Colors.white70,
+                  buttonText: "Got it",
+                  onPressed: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ToDoListPage())),
+                  },
+                ),
               ),
             ),
             Padding(

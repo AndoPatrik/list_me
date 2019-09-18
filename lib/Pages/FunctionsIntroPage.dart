@@ -87,8 +87,7 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        //color: Colors.white60,
-        decoration: BoxDecoration(gradient: kBackgroundLinearGradient2),
+        decoration: BoxDecoration(gradient: kGradientGreenToPurple),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,7 +104,7 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                       fontSize: 35.0,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Roboto",
-                      color: kForegroundColor),
+                      color: kColorWhite),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -137,7 +136,7 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                               ),
                             ],
                             //color: kHighlightColor,
-                            gradient: kBackgroundLinearGradient2,
+                            gradient: kGradientGreenToPurple,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0))),
                         child: Column(
@@ -147,31 +146,23 @@ class _FunctionsIntroPageState extends State<FunctionsIntroPage> {
                             ),
                             Text(
                               feature.featureName,
-                              style: TextStyle(
-                                  fontSize: 30.0, color: kForegroundColor),
+                              style:
+                                  TextStyle(fontSize: 30.0, color: kColorWhite),
                               textAlign: TextAlign.center,
                             ),
                             new CircleAvatar(
                               backgroundColor: Colors.transparent,
-                              foregroundColor: kForegroundColor,
+                              foregroundColor: kColorWhite,
                               radius: 100.0,
                               child: Icon(
                                 feature.icon,
                                 size: 100,
                               ),
-
-                              /* new Text(
-                                "Flare",
-                                style: TextStyle(
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                              ), */
                             ),
                             Text(
                               feature.description,
-                              style: TextStyle(
-                                  fontSize: 20.0, color: kForegroundColor),
+                              style:
+                                  TextStyle(fontSize: 20.0, color: kColorWhite),
                               textAlign: TextAlign.center,
                             )
                           ],

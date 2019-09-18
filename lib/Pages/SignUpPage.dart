@@ -23,42 +23,42 @@ class SignUpPageState extends State<SignUpPage> {
       body: Container(
           padding: EdgeInsets.only(top: 100.0),
           decoration: BoxDecoration(
-            gradient: kBackgroundLinearGradient2,
+            gradient: kGradientGreenToPurple,
           ),
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: <Widget>[
               new Text(
                 "Please fill up the form",
-                style: TextStyle(color: kForegroundColor, fontSize: 30.0),
+                style: TextStyle(color: kColorWhite, fontSize: 30.0),
               ),
               new Padding(
                 padding: EdgeInsets.only(top: 150.0),
               ),
               CustomInputField(Icons.alternate_email, false,
-                  "Enter your e-mail address", kForegroundColor, (value) {
+                  "Enter your e-mail address", kColorWhite, (value) {
                 setState(() {
                   _email = value;
                 });
               }),
-/*               CustomInputField(Icons.person_add, false, "Enter your username",
-                  kForegroundColor, (value) {}), */
-              CustomInputField(Icons.lock_open, true, "Enter your password",
-                  kForegroundColor, (value) {
+              CustomInputField(
+                  Icons.lock_open, true, "Enter your password", kColorWhite,
+                  (value) {
                 setState(() {
                   _password = value;
                 });
               }),
-              CustomInputField(Icons.lock_open, true, "Repeat your password",
-                  kForegroundColor, (value) {
+              CustomInputField(
+                  Icons.lock_open, true, "Repeat your password", kColorWhite,
+                  (value) {
                 setState(() {
                   _passwordConfirm = value;
                 });
               }),
               RoundedButton(
-                buttonColor: kCustomPurpleColor,
+                buttonColor: kColorCustomPurple,
                 buttonText: "Submit",
-                textColor: kForegroundColor,
+                textColor: kColorWhite,
                 onPressed: () async {
                   print(_email);
                   print(_password);
@@ -100,33 +100,6 @@ class SignUpPageState extends State<SignUpPage> {
                   }
                 },
               ),
-              /* new Container(
-                width: MediaQuery.of(context).size.width,
-                margin:
-                    const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 50.0),
-                child: new Row(
-                  children: <Widget>[
-                    new Expanded(
-                      child: new FlatButton(
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 20.0),
-                        color: kCustomPurpleColor,
-                        onPressed: () {
-                          PopUpDialog.creaAlertDialog(title: "Confirmation" , msg: "Your account has been created. Now you can log in.", context: context);
-                        },
-                        child: Text(
-                          "Submit",
-                          style: TextStyle(color: kForegroundColor),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ), */
             ],
           )),
     );

@@ -35,10 +35,8 @@ class ToDoListPageState extends State<ToDoListPage> {
         child: Column(
           children: <Widget>[
             Container(
-              //width: MediaQuery.of(context).size.width,
-              //height: MediaQuery.of(context).size.height * 0.81,
               child: Expanded(
-                              child: StreamBuilder<QuerySnapshot>(
+                child: StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection('todolist').snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -50,24 +48,33 @@ class ToDoListPageState extends State<ToDoListPage> {
                     return new ListView(
                         children: snapshot.data.documents
                             .map((DocumentSnapshot document) {
-                      return Card(
-                          child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50.0,
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: 10,
-                              height: 25,
-                              color: Colors.blue,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 20.0),
-                            ),
-                            Text(document['Task'])
-                          ],
-                        ),
-                      ));
+                      return GestureDetector(
+                        onTap: () {
+                          print(document['Task']);
+                        },
+                        child: Card(
+                            child: Container(
+                          height: 50.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 5, bottom: 5),
+                                child: Container(
+                                  width: 5,
+                                  height: 25,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                child: Text(document['Task']),
+                              )
+                            ],
+                          ),
+                        )),
+                      );
                     }).toList());
                   },
                 ),
@@ -86,10 +93,6 @@ class ToDoListPageState extends State<ToDoListPage> {
             icon: Icon(Icons.remove),
             title: Text('Remove'),
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.school),
-          //   title: Text('School'),
-          // ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.grey,

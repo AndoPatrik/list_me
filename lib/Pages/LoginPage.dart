@@ -24,7 +24,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         inAsyncCall: _showSpinner,
         child: Container(
           decoration: new BoxDecoration(
-            gradient: kBackgroundLinearGradient2
+            gradient: kGradientGreenToPurple
           ),
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -39,7 +39,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         width: 128.0,
                         child: new CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          foregroundColor: kForegroundColor,
+                          foregroundColor: kColorWhite,
                           radius: 100.0,
                           child: new Text(
                             "LM",
@@ -51,7 +51,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: kForegroundColor,
+                            color: kColorWhite,
                             width: 1.0,
                           ),
                           shape: BoxShape.circle,
@@ -61,7 +61,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         padding: const EdgeInsets.all(16.0),
                         child: new Text(
                           "List Me",
-                          style: TextStyle(color: kForegroundColor),
+                          style: TextStyle(color: kColorWhite),
                         ),
                       )
                     ],
@@ -72,13 +72,13 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                   Icons.alternate_email,
                   false,
                   "Enter your e-mail address",
-                  kForegroundColor,
+                  kColorWhite,
                   (value) => {_email = value}),
               CustomInputField(
                   Icons.lock_open,
                   true,
                   "Enter your password",
-                  kForegroundColor,
+                  kColorWhite,
                   (value) => {
                         setState(() => {_password = value})
                       }),
@@ -86,8 +86,8 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 padding: EdgeInsets.only(top: 40),
               ),
               RoundedButton(
-                textColor: kForegroundColor,
-                buttonColor: kCustomPurpleColor,
+                textColor: kColorWhite,
+                buttonColor: kColorCustomPurple,
                 buttonText: "Log In",
                 onPressed: () async {
                   setState(() {
@@ -142,7 +142,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         child: Text(
                           "Forgot your password?",
                           style: TextStyle(
-                              color: kForegroundColor.withOpacity(0.5)),
+                              color: kColorWhite.withOpacity(0.5)),
                         ),
                       ),
                     ),
@@ -160,7 +160,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               builder: (context) => SignUpPage()))
                 },
                 buttonColor: Colors.transparent,
-                textColor: kForegroundColor.withOpacity(0.5),
+                textColor: kColorWhite.withOpacity(0.5),
                 buttonText: "Don't you have an account? Create one",
               ),
             ],

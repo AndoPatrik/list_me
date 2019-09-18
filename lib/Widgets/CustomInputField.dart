@@ -7,7 +7,8 @@ class CustomInputField extends StatelessWidget {
   final Color _color;
   final Function onChanged;
 
-  CustomInputField(this._icon, this._secret, this._hintText, this._color, this.onChanged);
+  CustomInputField(
+      this._icon, this._secret, this._hintText, this._color, this.onChanged);
 
   @override
   Widget build(BuildContext context) {

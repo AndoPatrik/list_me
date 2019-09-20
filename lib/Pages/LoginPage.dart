@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Pages/FunctionsIntroPage.dart';
@@ -12,20 +14,48 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
+class LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   bool _showSpinner = false;
   String _email, _password;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  AnimationController _controller;
+  Animation _buttonBounceAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 200),
+      vsync: this,
+      lowerBound: 0.0,
+      upperBound: 0.8,
+    );
+
+    _buttonBounceAnimation =
+        CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
+
+    //_controller.forward();
+
+    _controller.addListener(() {
+      setState(() {});
+    });
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    double scale = 1 - _buttonBounceAnimation.value;
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: _showSpinner,
         child: Container(
-          decoration: new BoxDecoration(
-            gradient: kGradientGreenToPurple
-          ),
+          decoration: new BoxDecoration(gradient: kGradientGreenToPurple),
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: <Widget>[
@@ -85,38 +115,60 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               Padding(
                 padding: EdgeInsets.only(top: 40),
               ),
-              RoundedButton(
-                textColor: kColorWhite,
-                buttonColor: kColorCustomPurple,
-                buttonText: "Log In",
-                onPressed: () async {
-                  setState(() {
-                    _showSpinner = true;
-                  });
-
-                  try {
-                    final user = await _auth.signInWithEmailAndPassword(
-                        email: _email, password: _password);
-                    if (user != null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FunctionsIntroPage()));
+              Transform.scale(
+                scale: scale,
+                child: RoundedButton(
+                  textColor: kColorWhite,
+                  buttonColor: kColorCustomPurple,
+                  buttonText: "Log In",
+                  onPressed: () async {
+                    setState(() {
+                      _showSpinner = true;
+                    });
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                          email: _email, password: _password);
+                      if (user != null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FunctionsIntroPage()));
+                        setState(() {
+                          _showSpinner = false;
+                        });
+                      } else {
+                        setState(() {
+                          _showSpinner = false;
+                          //_controller.forward();
+                          print("meh1");
+                        });
+                      }
+                    } catch (e) {
                       setState(() {
                         _showSpinner = false;
+
+                        print("meh2");
                       });
+
+                      // _controller.reverse();
+                      // if (_controller.isAnimating == false) {
+                      //   _controller.forward();
+                      // }
+
+                      _controller.forward();
+                      //_controller.repeat(reverse: true);
+
+                      //_controller.reset();
+
+                      //Backup error displaying
+                      // PopUpDialog.creaAlertDialog(
+                      //     context: context,
+                      //     title: "Wrong credentials",
+                      //     msg:
+                      //         "Something went wrong...Please check your credentials, and try again");
                     }
-                  } catch (e) {
-                    setState(() {
-                      _showSpinner = false;
-                    });
-                    PopUpDialog.creaAlertDialog(
-                        context: context,
-                        title: "Wrong credentials",
-                        msg:
-                            "Something went wrong...Please check your credentials, and try again");
-                  }
-                },
+                  },
+                ),
               ),
               new Container(
                 width: MediaQuery.of(context).size.width,
@@ -141,8 +193,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         },
                         child: Text(
                           "Forgot your password?",
-                          style: TextStyle(
-                              color: kColorWhite.withOpacity(0.5)),
+                          style: TextStyle(color: kColorWhite.withOpacity(0.5)),
                         ),
                       ),
                     ),
@@ -154,10 +205,8 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               ),
               RoundedButton(
                 onPressed: () => {
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpPage()))
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()))
                 },
                 buttonColor: Colors.transparent,
                 textColor: kColorWhite.withOpacity(0.5),

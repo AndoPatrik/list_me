@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Pages/FunctionsIntroPage.dart';
@@ -139,27 +137,13 @@ class LoginPageState extends State<LoginPage>
                       } else {
                         setState(() {
                           _showSpinner = false;
-                          //_controller.forward();
-                          print("meh1");
                         });
                       }
                     } catch (e) {
                       setState(() {
                         _showSpinner = false;
-
-                        print("meh2");
                       });
-
-                      // _controller.reverse();
-                      // if (_controller.isAnimating == false) {
-                      //   _controller.forward();
-                      // }
-
                       _controller.forward();
-                      //_controller.repeat(reverse: true);
-
-                      //_controller.reset();
-
                       //Backup error displaying
                       // PopUpDialog.creaAlertDialog(
                       //     context: context,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Pages/FunctionsIntroPage.dart';
@@ -15,10 +17,12 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   bool _showSpinner = false;
+  bool _wrongLogin = false;
   String _email, _password;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   AnimationController _controller;
   Animation _buttonBounceAnimation;
+  Color _loginBtnColor = kColorCustomPurple;
 
   @override
   void initState() {
@@ -33,8 +37,6 @@ class LoginPageState extends State<LoginPage>
     _buttonBounceAnimation =
         CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
 
-    //_controller.forward();
-
     _controller.addListener(() {
       setState(() {});
     });
@@ -43,6 +45,16 @@ class LoginPageState extends State<LoginPage>
       if (status == AnimationStatus.completed) {
         _controller.reverse();
       }
+    });
+  }
+
+  _loginBtnWrongInputUIHandler() {
+    _loginBtnColor = Colors.red;
+    _controller.forward();
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _loginBtnColor = kColorCustomPurple;
+      });
     });
   }
 
@@ -101,14 +113,14 @@ class LoginPageState extends State<LoginPage>
                   false,
                   "Enter your e-mail address",
                   kColorWhite,
-                  (value) => {_email = value}),
+                  (value) => {_email = value, _wrongLogin = false}),
               CustomInputField(
                   Icons.lock_open,
                   true,
                   "Enter your password",
                   kColorWhite,
                   (value) => {
-                        setState(() => {_password = value})
+                        setState(() => {_password = value, _wrongLogin = false})
                       }),
               Padding(
                 padding: EdgeInsets.only(top: 40),
@@ -117,7 +129,7 @@ class LoginPageState extends State<LoginPage>
                 scale: scale,
                 child: RoundedButton(
                   textColor: kColorWhite,
-                  buttonColor: kColorCustomPurple,
+                  buttonColor: _loginBtnColor,
                   buttonText: "Log In",
                   onPressed: () async {
                     setState(() {
@@ -142,14 +154,10 @@ class LoginPageState extends State<LoginPage>
                     } catch (e) {
                       setState(() {
                         _showSpinner = false;
+                        _wrongLogin = true;
                       });
-                      _controller.forward();
-                      //Backup error displaying
-                      // PopUpDialog.creaAlertDialog(
-                      //     context: context,
-                      //     title: "Wrong credentials",
-                      //     msg:
-                      //         "Something went wrong...Please check your credentials, and try again");
+                      //_controller.forward();
+                      _loginBtnWrongInputUIHandler();
                     }
                   },
                 ),

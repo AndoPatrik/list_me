@@ -23,6 +23,7 @@ class LoginPageState extends State<LoginPage>
   AnimationController _controller;
   Animation _buttonBounceAnimation;
   Color _loginBtnColor = kColorCustomPurple;
+  String _loginBtnText = "Log In";
 
   @override
   void initState() {
@@ -35,7 +36,7 @@ class LoginPageState extends State<LoginPage>
     );
 
     _buttonBounceAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
+        CurvedAnimation(parent: _controller, curve: Curves.easeInExpo);
 
     _controller.addListener(() {
       setState(() {});
@@ -50,9 +51,11 @@ class LoginPageState extends State<LoginPage>
 
   _loginBtnWrongInputUIHandler() {
     _loginBtnColor = Colors.red;
+    _loginBtnText = "Try again!";
     _controller.forward();
     Timer(Duration(seconds: 3), () {
       setState(() {
+        _loginBtnText = "Log In";
         _loginBtnColor = kColorCustomPurple;
       });
     });
@@ -130,7 +133,7 @@ class LoginPageState extends State<LoginPage>
                 child: RoundedButton(
                   textColor: kColorWhite,
                   buttonColor: _loginBtnColor,
-                  buttonText: "Log In",
+                  buttonText: _loginBtnText,
                   onPressed: () async {
                     setState(() {
                       _showSpinner = true;

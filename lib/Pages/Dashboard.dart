@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:list_me/Pages/ToDoListPage.dart';
+import 'package:list_me/Utilities/constants.dart';
+import 'package:list_me/Widgets/DashbordItem.dart';
+import 'package:list_me/Widgets/DashbordSideBar.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -12,6 +16,7 @@ class Dashboardtate extends State<Dashboard> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(gradient: kGradientGreenToPurple),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -22,45 +27,41 @@ class Dashboardtate extends State<Dashboard> {
               flex: 10,
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    flex: 10,
-                    child: Container(
-                      color: Colors.red,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(top: 20),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                            padding: EdgeInsets.all(30),
-                            width: 150,
-                            height: 150,
-                            child: Text(
-                              "Test element",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                        ],
+                  DashboardSideBar(
+                    side: Side.Left,
+                    children: <Widget>[
+                      DashbordItem(
+                        text: "ToDo",
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ToDoListPage()));
+                        },
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                      ),
+                      DashbordItem(),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                      ),
+                      DashbordItem(),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                      ),
+                      DashbordItem(),
+                    ],
                   ),
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      color: Colors.white,
-                    ),
+                    child: Container(),
                   ),
-                  Expanded(
-                    flex: 10,
-                    child: Container(
-                      color: Colors.blue,
-                    ),
+                  DashboardSideBar(
+                    side: Side.Right,
+                    children: <Widget>[
+                      DashbordItem(),
+                    ],
                   ),
                 ],
               ),

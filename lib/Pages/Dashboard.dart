@@ -19,10 +19,7 @@ class Dashboardtate extends State<Dashboard> {
         decoration: BoxDecoration(gradient: kGradientGreenToPurple),
         child: Column(
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text("Title"),
-            ),
+            SizedBox(height: 80),
             Expanded(
               flex: 10,
               child: Row(
@@ -38,6 +35,7 @@ class Dashboardtate extends State<Dashboard> {
                               MaterialPageRoute(
                                   builder: (context) => ToDoListPage()));
                         },
+                        icon: Icons.short_text,
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 20),
@@ -64,6 +62,16 @@ class Dashboardtate extends State<Dashboard> {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              //TODO: Implement bottom bar or fab for back navigation
+              child: FloatingActionButton(
+                onPressed: () {},
+                backgroundColor: Colors.black.withOpacity(0.1),
+                elevation: 0,
+                child: Icon(Icons.backspace),
               ),
             ),
           ],

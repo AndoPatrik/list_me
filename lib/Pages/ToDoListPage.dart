@@ -50,46 +50,52 @@ class ToDoListPageState extends State<ToDoListPage> {
                     return new ListView(
                         children: snapshot.data.documents
                             .map((DocumentSnapshot document) {
-                          return GestureDetector(
-                            onTap: () {
-                              print(document['Task']);
-                            },
-                            child: Card(
-                                color: Colors.transparent,
-                                child: Container(
-                                  height: 50.0,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10,
-                                            right: 10,
-                                            top: 5,
-                                            bottom: 5),
-                                        child: Container(
-                                          width: 5,
-                                          height: 25,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10.0),
-                                        child: Text(document['Task']),
-                                      )
-                                    ],
+                      return GestureDetector(
+                        onTap: () {
+                          print(document['Task']);
+                        },
+                        child: Card(
+                            color: Colors.transparent,
+                            child: Container(
+                              height: 50.0,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10, top: 5, bottom: 5),
+                                    child: Container(
+                                      width: 5,
+                                      height: 25,
+                                      color: Colors.blue,
+                                    ),
                                   ),
-                                )),
-                          );
-                        }).toList());
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: Text(document['Task']),
+                                  )
+                                ],
+                              ),
+                            )),
+                      );
+                    }).toList());
                   },
                 ),
               ),
             ),
           ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          try {
+            Firestore.instance.collection('todolist').add({"Task": "Test"});
+          } catch (e) {
+            throw e;
+          }
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

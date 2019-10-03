@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:list_me/Utilities/Helper/utils.dart';
+import 'package:list_me/Utilities/FirebaseHelper.dart';
 import 'package:list_me/Utilities/constants.dart';
 
 class ToDoListPage extends StatefulWidget {
@@ -39,7 +39,12 @@ class ToDoListPageState extends State<ToDoListPage> {
             Container(
               child: Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection('todolist').snapshots(),
+                  stream: Firestore.instance
+                      .collection('todolists')
+                      .document(FirebaseHelper.loggedInUser.email)
+                      .collection('toDoListItems')
+                      .snapshots(),
+                  //Firestore.instance.collection('todolist').snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {

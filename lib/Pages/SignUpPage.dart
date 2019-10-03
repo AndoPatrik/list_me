@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Utilities/constants.dart';
 import 'package:list_me/Widgets/CustomInputField.dart';
 import 'package:list_me/Widgets/PopUpDialog.dart';
 import 'package:list_me/Widgets/RoundedButton.dart';
+import 'package:list_me/Utilities/FirebaseHelper.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPageState createState() => SignUpPageState();
@@ -68,10 +70,16 @@ class SignUpPageState extends State<SignUpPage> {
                       _checkPasswordMatch(_password, _passwordConfirm) ==
                           true) {
                     try {
-                      final user = await _auth.createUserWithEmailAndPassword(
-                          email: _email, password: _password);
+                      final authRes =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: _email, password: _password);
 
-                      if (user != null) {
+                      if (authRes != null) {
+                        // Firestore.instance
+                        //     .collection('todolists')
+                        //     .document(user.user.email)
+                        //     .setData(null);
+
                         PopUpDialog.creaAlertDialog(
                             title: "Confirmation",
                             msg:

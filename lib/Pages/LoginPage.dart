@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Pages/FunctionsIntroPage.dart';
 import 'package:list_me/Pages/SignUpPage.dart';
+import 'package:list_me/Utilities/FirebaseHelper.dart';
 import 'package:list_me/Utilities/constants.dart';
 import 'package:list_me/Widgets/CustomInputField.dart';
 import 'package:list_me/Widgets/PopUpDialog.dart';
@@ -139,9 +140,10 @@ class LoginPageState extends State<LoginPage>
                       _showSpinner = true;
                     });
                     try {
-                      final user = await _auth.signInWithEmailAndPassword(
+                      final authRes = await _auth.signInWithEmailAndPassword(
                           email: _email, password: _password);
-                      if (user != null) {
+                      if (authRes != null) {
+                        FirebaseHelper.loggedInUser = authRes.user;
                         Navigator.push(
                             context,
                             MaterialPageRoute(

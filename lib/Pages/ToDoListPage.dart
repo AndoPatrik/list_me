@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:list_me/Utilities/FirebaseHelper.dart';
 import 'package:list_me/Utilities/constants.dart';
+import 'package:list_me/Widgets/CreateTodoPopUp.dart';
 
 class ToDoListPage extends StatefulWidget {
   @override
@@ -96,7 +97,12 @@ class ToDoListPageState extends State<ToDoListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           try {
-            Firestore.instance.collection('todolist').add({"Task": "Test"});
+            // Firestore.instance
+            //     .collection('todolists')
+            //     .document(FirebaseHelper.loggedInUser.email)
+            //     .collection('toDoListItems')
+            //     .add({"Task": "Test"});
+            CreateTodoPopUp.createTodoPopUp(context: this.context);
           } catch (e) {
             throw e;
           }

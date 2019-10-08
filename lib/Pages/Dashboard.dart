@@ -45,19 +45,22 @@ class Dashboardtate extends State<Dashboard> {
                         padding: EdgeInsets.only(bottom: 20),
                       ),
                       DashbordItem(),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                      ),
-                      DashbordItem(),
                     ],
                   ),
                   Expanded(
                     flex: 1,
-                    child: Container(),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Colors.black.withOpacity(0.1))),
                   ),
                   DashboardSideBar(
                     side: Side.Right,
                     children: <Widget>[
+                      DashbordItem(),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                      ),
                       DashbordItem(),
                     ],
                   ),

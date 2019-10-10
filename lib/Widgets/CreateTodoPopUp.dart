@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:list_me/Utilities/FirebaseHelper.dart';
 import 'package:list_me/Utilities/constants.dart';
 import 'package:list_me/Widgets/CustomInputField.dart';
+import 'package:list_me/Widgets/RoundedButton.dart';
 
 class CreateTodoPopUp {
   static createTodoPopUp({@required BuildContext context}) {
     String _toDoText = "";
+    String _ribbonColor = "blue";
 
     void _addToDoTask() async {
       if (_toDoText != "" && _toDoText != null) {
@@ -15,7 +17,13 @@ class CreateTodoPopUp {
               .collection('todolists')
               .document(FirebaseHelper.loggedInUser.email)
               .collection('toDoListItems')
-              .add({"Task": _toDoText});
+              .add({
+            "Task": _toDoText,
+            "isDone": false,
+            "color": _ribbonColor,
+            "createdAt": new DateTime.now()
+          });
+          Navigator.of(context).pop();
         } catch (err) {
           throw err;
         }
@@ -47,21 +55,27 @@ class CreateTodoPopUp {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       new RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _ribbonColor = 'blue';
+                        },
                         shape: new CircleBorder(),
                         elevation: 2.0,
                         fillColor: Colors.blue,
                         padding: const EdgeInsets.all(15.0),
                       ),
                       new RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _ribbonColor = "green";
+                        },
                         shape: new CircleBorder(),
                         elevation: 2.0,
                         fillColor: Colors.green,
                         padding: const EdgeInsets.all(15.0),
                       ),
                       new RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _ribbonColor = "red";
+                        },
                         shape: new CircleBorder(),
                         elevation: 2.0,
                         fillColor: Colors.red,
@@ -71,21 +85,21 @@ class CreateTodoPopUp {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    // child: RoundedButton(
-                    //   onPressed: _addToDoTask(),
-                    //   buttonText: "Add",
-                    //   buttonColor: Colors.white,
-                    //   textColor: Colors.black,
-                    // ),
-                    child: FloatingActionButton(
+                    child: RoundedButton(
                       onPressed: _addToDoTask,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.add,
-                        size: 20,
-                        color: Colors.black,
-                      ),
+                      buttonText: "Add",
+                      buttonColor: Colors.white,
+                      textColor: Colors.black,
                     ),
+                    // child: FloatingActionButton(
+                    //   onPressed: _addToDoTask,
+                    //   backgroundColor: Colors.white,
+                    //   child: Icon(
+                    //     Icons.add,
+                    //     size: 20,
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
                   )
                 ],
               ),

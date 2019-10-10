@@ -4,18 +4,52 @@ import 'package:list_me/Utilities/FirebaseHelper.dart';
 import 'package:list_me/Utilities/constants.dart';
 import 'package:list_me/Widgets/CreateTodoPopUp.dart';
 
-class ToDoListPage extends StatefulWidget {
+class ToDoPage extends StatefulWidget {
   @override
-  ToDoListPageState createState() => ToDoListPageState();
+  ToDoPageState createState() => ToDoPageState();
 }
 
-class ToDoListPageState extends State<ToDoListPage> {
+class ToDoPageState extends State<ToDoPage> {
   int _selectedIndex = 0;
+  List<int> _itemsToBeRemoved;
+  Color _cardColor = Colors.transparent;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    if (index == 1) {
+      // Firestore.instance
+      //     .collection('todolists')
+      //     .document(FirebaseHelper.loggedInUser.email)
+      //     .collection('toDoListItems')
+      //     .document()
+      //     .delete();
+    }
+  }
+
+  void _setToBeDone(String docID) {
+    setState(() {
+      Firestore.instance
+          .collection('todolists')
+          .document(FirebaseHelper.loggedInUser.email)
+          .collection('toDoListItems')
+          .document(docID)
+          .updateData({'isDone': true});
+    });
+  }
+
+  Color _getImportanceColor(String colorString) {
+    switch (colorString) {
+      case "blue":
+        return Colors.blue;
+      case "red":
+        return Colors.red;
+      case "green":
+        return Colors.green;
+    }
+    return Colors.transparent;
   }
 
   @override
@@ -44,8 +78,9 @@ class ToDoListPageState extends State<ToDoListPage> {
                       .collection('todolists')
                       .document(FirebaseHelper.loggedInUser.email)
                       .collection('toDoListItems')
+                      .where("isDone", isEqualTo: false)
+                      .orderBy('color')
                       .snapshots(),
-                  //Firestore.instance.collection('todolist').snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
@@ -58,10 +93,11 @@ class ToDoListPageState extends State<ToDoListPage> {
                             .map((DocumentSnapshot document) {
                       return GestureDetector(
                         onTap: () {
-                          print(document['Task']);
+                          print(document.documentID);
+                          _setToBeDone(document.documentID);
                         },
                         child: Card(
-                            color: Colors.transparent,
+                            color: _cardColor,
                             child: Container(
                               height: 50.0,
                               child: Row(
@@ -74,7 +110,8 @@ class ToDoListPageState extends State<ToDoListPage> {
                                     child: Container(
                                       width: 5,
                                       height: 25,
-                                      color: Colors.blue,
+                                      color: _getImportanceColor(
+                                          document['color']),
                                     ),
                                   ),
                                   Padding(
@@ -97,11 +134,6 @@ class ToDoListPageState extends State<ToDoListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           try {
-            // Firestore.instance
-            //     .collection('todolists')
-            //     .document(FirebaseHelper.loggedInUser.email)
-            //     .collection('toDoListItems')
-            //     .add({"Task": "Test"});
             CreateTodoPopUp.createTodoPopUp(context: this.context);
           } catch (e) {
             throw e;

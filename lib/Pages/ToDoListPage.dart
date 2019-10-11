@@ -11,21 +11,24 @@ class ToDoPage extends StatefulWidget {
 
 class ToDoPageState extends State<ToDoPage> {
   int _selectedIndex = 0;
-  List<int> _itemsToBeRemoved;
   Color _cardColor = Colors.transparent;
+  String _displayedList;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    if (index == 1) {
-      // Firestore.instance
-      //     .collection('todolists')
-      //     .document(FirebaseHelper.loggedInUser.email)
-      //     .collection('toDoListItems')
-      //     .document()
-      //     .delete();
+    if (_selectedIndex != index) {
+      switch (index) {
+        case 1:
+          _displayedList = "done";
+          break;
+        case 0:
+          _displayedList = "not done";
+          break;
+        default:
+          _displayedList = "not done";
+      }
+      setState(() {
+        _selectedIndex = index;
+      });
     }
   }
 
@@ -52,21 +55,29 @@ class ToDoPageState extends State<ToDoPage> {
     return Colors.transparent;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Stream<QuerySnapshot> _stream(String displayedList) {
+    if (displayedList == "done") {
+      return Firestore.instance
+          .collection('todolists')
+          .document(FirebaseHelper.loggedInUser.email)
+          .collection('toDoListItems')
+          .where("isDone", isEqualTo: true)
+          .orderBy('createdAt')
+          .snapshots();
+    } else {
+      return Firestore.instance
+          .collection('todolists')
+          .document(FirebaseHelper.loggedInUser.email)
+          .collection('toDoListItems')
+          .where("isDone", isEqualTo: false)
+          .orderBy('createdAt')
+          .snapshots();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     Utils.getWelcomeMsg(),
-      //     textAlign: TextAlign.left,
-      //     style: TextStyle(fontSize: 30),
-      //   ),
-      // ),
       body: Container(
         decoration: BoxDecoration(gradient: kGradientGreenToPurple),
         child: Column(
@@ -74,13 +85,7 @@ class ToDoPageState extends State<ToDoPage> {
             Container(
               child: Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance
-                      .collection('todolists')
-                      .document(FirebaseHelper.loggedInUser.email)
-                      .collection('toDoListItems')
-                      .where("isDone", isEqualTo: false)
-                      .orderBy('color')
-                      .snapshots(),
+                  stream: _stream(_displayedList),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
@@ -89,7 +94,7 @@ class ToDoPageState extends State<ToDoPage> {
                       );
                     }
                     return new ListView(
-                        children: snapshot.data.documents
+                        children: snapshot.data.documents.reversed
                             .map((DocumentSnapshot document) {
                       return GestureDetector(
                         onTap: () {
@@ -132,6 +137,8 @@ class ToDoPageState extends State<ToDoPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add, color: Colors.black),
+        backgroundColor: Colors.white,
         onPressed: () {
           try {
             CreateTodoPopUp.createTodoPopUp(context: this.context);
@@ -143,12 +150,12 @@ class ToDoPageState extends State<ToDoPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            title: Text('Add'),
+            icon: Icon(Icons.done),
+            title: Text('Done'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.remove),
-            title: Text('Remove'),
+            icon: Icon(Icons.indeterminate_check_box),
+            title: Text('Not Done'),
           ),
         ],
         currentIndex: _selectedIndex,

@@ -150,12 +150,12 @@ class ToDoPageState extends State<ToDoPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.done),
-            title: Text('Done'),
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.indeterminate_check_box),
             title: Text('Not Done'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.done),
+            title: Text('Done'),
           ),
         ],
         currentIndex: _selectedIndex,
